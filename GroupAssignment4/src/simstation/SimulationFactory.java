@@ -1,7 +1,7 @@
 package simstation;
 import mvc.*;
 
-public abstract class SimulationFactory implements AppFactory{
+public abstract class SimulationFactory implements AppFactory {
 
 	@Override
 	public abstract Model makeModel();
@@ -39,7 +39,7 @@ public abstract class SimulationFactory implements AppFactory{
 		if (name.equals("Stats")) return new StatsCommand(m);
     	if (name.equals("Stop")) return new StopCommand(m);
     	if (name.equals("Suspend")) return new SuspendCommand(m);
-    	if (name.equals("Resume")) return new ResumeCommand(m);
+    	if (name.equals("Resume")) return new ResumeCommand(m);	
 		return null;
 	}
 
