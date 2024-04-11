@@ -6,22 +6,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/*
-Edits:
-   Hiba 3/5/24: created file
-   
-   Hiba 3/5/24: : implemented AppPanel (MVC Pattern: finished)
-   
-   Christopher 3/13/24: Now implements Subscriber in addition to ActionListener. Neither
-   	uses PropertyChangeListener nor JavaBean anymore (due to revised specifications). Added
-   	update(), modified AppPanel constructor according to Pub-Sub, added to actionPerformed
-   	and error handling
-   	
-   Adarsh 3/14/24: implemented AppPanel class according to example given by professor
-   
-   Christopher 3/16/24: updated AppPanel constructor (controlPanel stuff)
-*/
-
 public class AppPanel extends JPanel implements Subscriber, ActionListener {
     protected Model model;
     protected View view;
