@@ -1,10 +1,12 @@
 package simstation;
 import mvc.*;
 
-public abstract class SimulationFactory implements AppFactory {
+public class SimulationFactory implements AppFactory {
 
 	@Override
-	public abstract Model makeModel();
+	public Model makeModel() {
+		return new Simulation();
+	}
 
 	@Override
 	public View makeView(Model m) {
@@ -12,7 +14,9 @@ public abstract class SimulationFactory implements AppFactory {
 	}
 
 	@Override
-	public abstract String getTitle();
+	public String getTitle() {
+		return "Simstation";
+	}
 
 	@Override
 	public String[] getHelp() {
