@@ -2,7 +2,6 @@ package mvc;
 
 import java.awt.*;
 import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -106,4 +105,3 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener {
     	Utilities.error(e);
 	}
 }
-
