@@ -8,6 +8,7 @@ public class Simulation extends Model {
 	List<Agent> agents = new ArrayList<Agent>();
 	
 	public void start() {
+		populate();
 		for (Agent i: agents) {
 			i.run();
 		}
@@ -15,7 +16,7 @@ public class Simulation extends Model {
 	
 	public void suspend() {
 		for (Agent i: agents) {
-			i.run();
+			i.suspend();
 		}
 	}
 	
@@ -35,11 +36,11 @@ public class Simulation extends Model {
 	 * "An efficient implementation of getNeighbor picks a random location in the agents list. 
 	 * Starting at this location it visits each agent in order (wrapping around to the start if necessary) until 
 	 * it either finds a suitable neighbor or until it loops back to the starting point and returns null." - Dr. Pearce
-	 * */
+	 *
+	 */
 	public Agent getNeighbor(Agent a, double radius) {
 		// randomly selecting an index to start in agents
-		int rand = -1;
-		rand = Utilities.rng.nextInt(agents.size());
+		int rand = Utilities.rng.nextInt(agents.size());
 		
 		for (int i = rand; i < agents.size(); i++) {
 			double distanceAway = Math.pow(
@@ -49,7 +50,7 @@ public class Simulation extends Model {
 		}
 		
 		// wrapping around until we reach the random index again
-		for (int i = rand; i < agents.size(); i++) {
+		for (int i = 0; i < rand; i++) {
 			double distanceAway = Math.pow(
 					Math.pow((agents.get(i).xc - a.xc), 2) + Math.pow((agents.get(i).yc - a.yc), 2), 
 					0.5);
@@ -59,5 +60,8 @@ public class Simulation extends Model {
 		return null;
 	}
 	
-	public void populate() {}
+	// "Populate is an empty method that will be specified in subclasses. It's called by start and populates the simulation."
+	public void populate() {
+		
+	}
 }
