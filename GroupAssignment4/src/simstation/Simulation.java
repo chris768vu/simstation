@@ -7,29 +7,38 @@ public class Simulation extends Model {
 	int clock = 0;
 	List<Agent> agents = new ArrayList<Agent>();
 	
+	// will be overridden by subclasses (the customizations)
+	public void stats() {
+		
+	}
+	
 	public void start() {
 		populate();
 		for (Agent i: agents) {
 			i.run();
 		}
+		changed();
 	}
 	
 	public void suspend() {
 		for (Agent i: agents) {
 			i.suspend();
 		}
+		changed();
 	}
 	
 	public void resume() {
 		for (Agent i: agents) {
 			i.resume();
 		}
+		changed();
 	}
 	
 	public void stop() {
 		for (Agent i: agents) {
 			i.stop();
 		}
+		changed();
 	}
 	
 	/*
