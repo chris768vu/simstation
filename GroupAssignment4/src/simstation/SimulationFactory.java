@@ -28,7 +28,7 @@ public class SimulationFactory implements AppFactory {
 
 	@Override
 	public String about() {
-		return "Simstation";
+		return "Assignment 4: Simstation (Group 6)";
 	}
 
 	@Override
