@@ -1,76 +1,127 @@
 package simstation;
-import mvc.*;
-import java.util.List;
-import java.util.ArrayList;
 
-public class Simulation extends Model {
-	int clock = 0;
-	List<Agent> agents = new ArrayList<Agent>();
-	
-	// will be overridden by subclasses (the customizations)
-	public void stats() {
-		
+import java.util.*;
+import mvc.*;
+
+public abstract class Simulation extends Model {
+	public final static int SIZE = 200;
+	protected final ArrayList<Agent> agents;
+	private boolean isRunning;
+	private boolean isSuspended;
+	transient private Timer timer;
+	private int clock;
+
+	public Simulation() {
+		super();
+		agents = new ArrayList<>();
+		clock = 0;
+		isRunning = false;
+		isSuspended = false;
 	}
-	
+
+	public Iterator<Agent> agentIterator() {
+		return agents.iterator();
+	}
+
 	public void start() {
+		clock = 0;
+		startTimer();
+		agents.clear();
 		populate();
-		for (Agent i: agents) {
-			i.run();
+		for (Agent a : agents) {
+			a.start();
 		}
+		isRunning = true;
+		isSuspended = false;
 		changed();
 	}
-	
+
 	public void suspend() {
-		for (Agent i: agents) {
-			i.suspend();
+		stopTimer();
+		for (Agent a : agents) {
+			a.suspend();
 		}
+		isSuspended = true;
 		changed();
 	}
-	
+
 	public void resume() {
-		for (Agent i: agents) {
-			i.resume();
+		startTimer();
+		for (Agent a : agents) {
+			a.resume();
 		}
+		isSuspended = false;
 		changed();
 	}
-	
+
 	public void stop() {
-		for (Agent i: agents) {
-			i.stop();
+		stopTimer();
+		for (Agent a : agents) {
+			a.stop();
 		}
+		isRunning = false;
+		isSuspended = false;
 		changed();
 	}
-	
-	/*
-	 * "An efficient implementation of getNeighbor picks a random location in the agents list. 
-	 * Starting at this location it visits each agent in order (wrapping around to the start if necessary) until 
-	 * it either finds a suitable neighbor or until it loops back to the starting point and returns null." - Dr. Pearce
-	 *
-	 */
-	public Agent getNeighbor(Agent a, double radius) {
-		// randomly selecting an index to start in agents
-		int rand = Utilities.rng.nextInt(agents.size());
-		
-		for (int i = rand; i < agents.size(); i++) {
-			double distanceAway = Math.pow(
-					Math.pow((agents.get(i).xc - a.xc), 2) + Math.pow((agents.get(i).yc - a.yc), 2), 
-					0.5);
-			if (distanceAway <= radius && distanceAway != 0) return agents.get(i);
+	private double getDistance(Agent agent1, Agent agent2){
+
+		return Math.sqrt(Math.pow(agent1.getXc()-agent2.getXc(), 2) + Math.pow(agent1.getYc()-agent2.getYc(), 2));
+	}
+
+	public abstract void populate();
+
+	public String[] getStats() {
+		return new String[]{"#agents = " + agents.size()};
+	}
+
+	public void addAgent(Agent agent) {
+		agents.add(agent);
+		agent.setWorld(this);
+	}
+	public Agent getNeighbor(Agent agent, double radius) {
+		int start = Utilities.rng.nextInt(agents.size());
+		for (int i = 0; i < agents.size(); ++i){
+			Agent cur = agents.get((start + i)%agents.size());
+			if (getDistance(cur, agent) < radius){
+				return cur;
+			}
 		}
-		
-		// wrapping around until we reach the random index again
-		for (int i = 0; i < rand; i++) {
-			double distanceAway = Math.pow(
-					Math.pow((agents.get(i).xc - a.xc), 2) + Math.pow((agents.get(i).yc - a.yc), 2), 
-					0.5);
-			if (distanceAway <= radius && distanceAway != 0) return agents.get(i);
-		}
-		
 		return null;
 	}
-	
-	// "Populate is an empty method that will be specified in subclasses. It's called by start and populates the simulation."
-	public void populate() {
-		
+	public List<Agent> getAllNeighbors(Agent agent, double radius) {
+		LinkedList<Agent> result = new LinkedList<>();
+		for (Agent cur : agents){
+			if (getDistance(cur, agent) < radius){
+				result.add(cur);
+			}
+		}
+		return result;
 	}
+
+	private void startTimer() {
+		timer = new Timer();
+		timer.scheduleAtFixedRate(new ClockUpdater(), 1000, 1000);
+	}
+
+	private void stopTimer() {
+		timer.cancel();
+		timer.purge();
+	}
+	public int getTime(){
+		return clock;
+	}
+	public boolean isRunning() {
+		return isRunning;
+	}
+
+	public boolean isSuspended() {
+		return isSuspended;
+	}
+
+	private class ClockUpdater extends TimerTask {
+		public void run() {
+			clock++;
+		}
+	}
+
 }
