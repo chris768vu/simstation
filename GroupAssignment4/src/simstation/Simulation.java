@@ -3,7 +3,7 @@ package simstation;
 import java.util.*;
 import mvc.*;
 
-public abstract class Simulation extends Model {
+public class Simulation extends Model {
 	public final static int SIZE = 200;
 	protected final ArrayList<Agent> agents;
 	private boolean isRunning;
@@ -68,7 +68,13 @@ public abstract class Simulation extends Model {
 		return Math.sqrt(Math.pow(agent1.getXc()-agent2.getXc(), 2) + Math.pow(agent1.getYc()-agent2.getYc(), 2));
 	}
 
-	public abstract void populate();
+	/* 
+	 * "Populate is an empty method that will be specified in subclasses. 
+	 * It's called by start and populates the simulation."
+	 * 
+	 * So populate() should not be abstact but will be overridden in subclasses
+	 */
+	public void populate() {}
 
 	public String[] getStats() {
 		return new String[]{"#agents = " + agents.size()};
@@ -78,6 +84,7 @@ public abstract class Simulation extends Model {
 		agents.add(agent);
 		agent.setWorld(this);
 	}
+	
 	public Agent getNeighbor(Agent agent, double radius) {
 		int start = Utilities.rng.nextInt(agents.size());
 		for (int i = 0; i < agents.size(); ++i){
@@ -88,6 +95,7 @@ public abstract class Simulation extends Model {
 		}
 		return null;
 	}
+	
 	public List<Agent> getAllNeighbors(Agent agent, double radius) {
 		LinkedList<Agent> result = new LinkedList<>();
 		for (Agent cur : agents){
@@ -107,9 +115,11 @@ public abstract class Simulation extends Model {
 		timer.cancel();
 		timer.purge();
 	}
+	
 	public int getTime(){
 		return clock;
 	}
+	
 	public boolean isRunning() {
 		return isRunning;
 	}
