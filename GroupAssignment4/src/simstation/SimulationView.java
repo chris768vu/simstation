@@ -1,46 +1,43 @@
 package simstation;
+
 import mvc.*;
-import javax.swing.*;
+
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 public class SimulationView extends View {
-	private Simulation world;
-	private JPanel gridPanel;
-	
+	protected Color agentColor = Color.WHITE;
+	protected Color backgroundColor = Color.DARK_GRAY;
+
 	public SimulationView(Model model) {
 		super(model);
-		setModel(model);
-		
-        setLayout(new BorderLayout());
-        gridPanel = new JPanel(new GridLayout(200, 200));
-        add(gridPanel);
-        
-		world = (Simulation) model;
-		if (world != null) {
-			model.subscribe(this);
-			paintComponent();
-		}
+		this.setBackground(backgroundColor);
 	}
-	
-	public void paintComponent() {
-        gridPanel.removeAll();
 
-		if (world != null) {
-			for (Agent a : world.agents) {	
-	            JLabel oval= new JLabel();
-	            oval.setOpaque(true);
-	            oval.setBackground(Color.WHITE); 
-	            oval.setPreferredSize(new Dimension(1, 1)); 
-	            gridPanel.add(oval);
-			}
+	protected void drawAgents(Graphics gc) {
+		Iterator<Agent> it = model.as(Simulation.class).agentIterator();
+
+		double cellWidth = ((double)getWidth())/ Simulation.SIZE;
+		double cellHeight = ((double)getHeight())/ Simulation.SIZE;
+
+		while (it.hasNext()) {
+			Agent a = it.next();
+			gc.setColor(getAgentColor(a));
+			gc.fillRect((int)(a.getXc() *cellWidth), (int)(a.getYc() *cellHeight), (int)cellWidth, (int)cellHeight);
 		}
-		
 	}
-	
-	@Override
-	public void update() {
-		paintComponent();
+	protected Color getAgentColor(Agent agent){
+		return agentColor;
+	}
+
+	public void paintComponent(Graphics gc) {
+		super.paintComponent(gc);
+		Color oldColor = gc.getColor();
+
+		gc.setColor(backgroundColor);
+		gc.fillRect(0,0, getWidth(), getHeight());
+		drawAgents(gc);
+
+		gc.setColor(oldColor);
 	}
 }
