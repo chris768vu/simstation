@@ -11,7 +11,8 @@ public class StatsCommand extends Command {
 	@Override
 	public void execute() throws Exception {
 		Simulation sim = (Simulation) model;
-		sim.stats();
+		// sim.stats();
+		// Stats has been implemented in Simulation by the getStats() method (returns a String[])
 	}
 
 }
