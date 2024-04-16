@@ -1,5 +1,7 @@
 package simstation;
-import mvc.*;
+
+import mvc.Command;
+import mvc.Model;
 
 public class ResumeCommand extends Command {
 
@@ -12,5 +14,5 @@ public class ResumeCommand extends Command {
 		Simulation sim = (Simulation) model;
 		sim.resume();
 	}
-
+	
 }

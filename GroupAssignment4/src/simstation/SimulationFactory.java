@@ -40,7 +40,6 @@ public class SimulationFactory implements AppFactory {
 	@Override
 	public Command makeEditCommand(Model m, String name, Object source) {
 		if (name.equals("Start")) return new StartCommand(m);
-		if (name.equals("Stats")) return new StatsCommand(m);
     	if (name.equals("Stop")) return new StopCommand(m);
     	if (name.equals("Suspend")) return new SuspendCommand(m);
     	if (name.equals("Resume")) return new ResumeCommand(m);	
