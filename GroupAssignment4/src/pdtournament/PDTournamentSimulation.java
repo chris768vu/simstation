@@ -5,7 +5,7 @@ import simstation.*;
 import java.util.Iterator;
 
 public class PDTournamentSimulation extends Simulation {
-	final static int TOTAL_AGENTS = 40;
+	final static int TOTAL_AGENTS = 200;
 	@Override
 	public String[] getStats() {
 		int numCooperate = 0;
@@ -17,11 +17,24 @@ public class PDTournamentSimulation extends Simulation {
 	}
 	
 	public void populate() {
-        for (int i = 0; i < 40; i++)
-        	if (i < 10) {
-        		addAgent(new Prisoner());
-        	}
-        
+		Strategy s;
+		
+        for (int i = 0; i < TOTAL_AGENTS / 4; i++) {
+        	s = new Cooperate();
+			addAgent(new Prisoner(s));
+        }
+        for (int i = 0; i < TOTAL_AGENTS / 4; i++) {
+        	s = new Cheat();
+			addAgent(new Prisoner(s));
+        }
+        for (int i = 0; i < TOTAL_AGENTS / 4; i++) {
+        	s = new Tit4Tat();
+			addAgent(new Prisoner(s));
+        }
+        for (int i = 0; i < TOTAL_AGENTS / 4; i++) {
+        	s = new RandomlyCooperate();
+			addAgent(new Prisoner(s));
+        }
     }
 	
 	public static void main(String[] args) {
