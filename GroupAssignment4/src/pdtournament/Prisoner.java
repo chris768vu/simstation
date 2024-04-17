@@ -21,28 +21,31 @@ public class Prisoner extends Agent {
 		Agent partner = world.getNeighbor(this, RADIUS);
 		if (partner != null) {
 			Prisoner prisonPartner = (Prisoner) partner;
-			if (prisonPartner.strategy instanceof Cooperate && this.strategy instanceof Cooperate) {
-				prisonPartner.fitness += 3;
-				this.fitness += 3;
-			}
-			if (prisonPartner.strategy instanceof Cooperate && this.strategy instanceof Cheat) {
-				prisonPartner.fitness += 3;
-				this.fitness += 3;
-			}
-			if (prisonPartner.strategy instanceof Cooperate && this.strategy instanceof Cooperate) {
-				prisonPartner.fitness += 3;
-				this.fitness += 3;
-			}
-			if (prisonPartner.strategy instanceof Cooperate && this.strategy instanceof Cooperate) {
-				prisonPartner.fitness += 3;
-				this.fitness += 3;
-			}
+			if (!willCheat && !prisonPartner.willCheat) {
+				updateFitness(3);
+				prisonPartner.updateFitness(3);
+				if (strategy instanceof Tit4Tat) {
+					
+				}
+				return false;
+			} else if (willCheat && !prisonPartner.willCheat) {
+				updateFitness(5);
+				return false;
+			} else if (!willCheat && prisonPartner.willCheat) {
+				prisonPartner.updateFitness(5);
+				return true;
+			} else if (willCheat && prisonPartner.willCheat) {
+				updateFitness(1);
+				prisonPartner.updateFitness(1);
+				return true;
+			} 
 		}
 		
 		return false;
 	}
 	
 	public void update() {
+		cooperate();
 		heading = Heading.random();
 		int steps = Utilities.rng.nextInt(10) + 1;
 		move(steps);	
@@ -50,6 +53,10 @@ public class Prisoner extends Agent {
 	
 	public void updateFitness(int amt) {
 		fitness += amt;
+	}
+	
+	public int getFitness() {
+		return fitness;
 	}
 
 }
