@@ -63,6 +63,7 @@ public class Simulation extends Model {
 		isSuspended = false;
 		changed();
 	}
+	
 	private double getDistance(Agent agent1, Agent agent2){
 
 		return Math.sqrt(Math.pow(agent1.getXc()-agent2.getXc(), 2) + Math.pow(agent1.getYc()-agent2.getYc(), 2));
@@ -72,12 +73,12 @@ public class Simulation extends Model {
 	 * "Populate is an empty method that will be specified in subclasses. 
 	 * It's called by start and populates the simulation."
 	 * 
-	 * So populate() should not be abstact but will be overridden in subclasses
+	 * So populate() should not be abstract but will be overridden in subclasses
 	 */
 	public void populate() {}
 
 	public String[] getStats() {
-		return new String[]{"#agents = " + agents.size()};
+		return new String[]{"#agents = " + agents.size(), "clock = " + getTime()};
 	}
 
 	public void addAgent(Agent agent) {
