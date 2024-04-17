@@ -5,7 +5,7 @@ import mvc.AppPanel;
 public class RandomWalkSimulation extends Simulation {
 
     public void populate() {
-        for(int i = 0; i < 15; i++)
+        for (int i = 0; i < 15; i++)
             addAgent(new Drunk());
     }
 
