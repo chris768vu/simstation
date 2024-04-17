@@ -22,7 +22,7 @@ public class SimulationFactory implements AppFactory {
 	public String[] getHelp() {
 		String[] help = {"Start starts the simulation\n", "Suspend pauses the simulation\n", "Resume undos suspend\n", 
 				"Stop ends the simulation run\n", 
-				"Stats displays the simulation time (in seconds) and the number of agents\n"};
+				"Stats displays relevant statistics to the simulation\n"};
 		return help;
 	}
 
