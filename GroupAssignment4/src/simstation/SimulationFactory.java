@@ -20,9 +20,9 @@ public class SimulationFactory implements AppFactory {
 
 	@Override
 	public String[] getHelp() {
-		String[] help = {"Start starts the simulation\n", "Suspend pauses the simulation\n", "Resume undos suspend\n",
-				"Stop ends the simulation run\n",
-				"Stats displays relevant statistics to the simulation\n"};
+		String[] help = {"Start starts the simulation\n", "Suspend pauses the simulation\n", "Resume undos suspend\n", 
+				"Stop ends the simulation run\n", 
+				"Stats displays the simulation time (in seconds) and the number of agents\n"};
 		return help;
 	}
 
@@ -38,21 +38,12 @@ public class SimulationFactory implements AppFactory {
 	}
 
 	@Override
-	public Command makeEditCommand(Model model, String name, Object source) {
-		switch (name) {
-			case "Start":
-				return new StartCommand(model);
-			case "Suspend":
-				return new SuspendCommand(model);
-			case "Resume":
-				return new ResumeCommand(model);
-			case "Stop":
-				return new StopCommand(model);
-			case "Stats":
-				return new StatsCommand(model);
-			default:
-				return null;
-		}
-
+	public Command makeEditCommand(Model m, String name, Object source) {
+		if (name.equals("Start")) return new StartCommand(m);
+    	if (name.equals("Stop")) return new StopCommand(m);
+    	if (name.equals("Suspend")) return new SuspendCommand(m);
+    	if (name.equals("Resume")) return new ResumeCommand(m);	
+		return null;
 	}
+
 }

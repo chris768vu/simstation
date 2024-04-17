@@ -91,6 +91,7 @@ public abstract class Agent implements Serializable, Runnable {
 			Utilities.error(e);
 		}
 	}
+	
 	public synchronized void move(int steps) {
 		for (int i = 0; i < steps; i++) {
 			xc = (xc + Simulation.SIZE + heading.getxDrt()) % Simulation.SIZE;
@@ -98,6 +99,7 @@ public abstract class Agent implements Serializable, Runnable {
 			world.changed();
 		}
 	}
+	
 	public synchronized double getXc() {
 		return xc;
 	}
