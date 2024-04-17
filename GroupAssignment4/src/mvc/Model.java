@@ -13,6 +13,7 @@ public abstract class Model extends Publisher implements Serializable {
 	public boolean getUnsavedChanges() {
 		return unsavedChanges;
 	}
+	
 	public void setUnsavedChanges(boolean hasChanges) {
 		unsavedChanges = hasChanges;
 	}
@@ -20,7 +21,7 @@ public abstract class Model extends Publisher implements Serializable {
 	public void setFileName(String fName) {
 		fileName = fName;
 	}
-	}
+	
 	public String getFileName() {
 		return fileName;
 	}
@@ -30,4 +31,6 @@ public abstract class Model extends Publisher implements Serializable {
 			return cls.cast(this);
 		}
 		throw new ClassCastException("Model instantiates " + cls.getName());
+	}
+	
 }
