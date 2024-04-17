@@ -5,7 +5,8 @@ import simstation.*;
 import java.util.Iterator;
 
 public class PDTournamentSimulation extends Simulation {
-	final static int TOTAL_AGENTS = 200;
+	final static int TOTAL_AGENTS = 40;
+	final static int QUARTER_AGENTS = TOTAL_AGENTS / 4;
 	
 	@Override
 	public String[] getStats() {
@@ -27,29 +28,36 @@ public class PDTournamentSimulation extends Simulation {
 				randCooperateFitness += current.getFitness();
 		}
 		
-		double avgCooperate = cooperateFitness / TOTAL_AGENTS;
-		double avgCheat = cheatFitness / TOTAL_AGENTS;
-		double avgTit4Tat = tit4tatFitness / TOTAL_AGENTS;
-		double avgRandCooperate = randCooperateFitness / TOTAL_AGENTS;
+		double avgCooperate = cooperateFitness / QUARTER_AGENTS;
+		double avgCheat = cheatFitness / QUARTER_AGENTS;
+		double avgTit4Tat = tit4tatFitness / QUARTER_AGENTS;
+		double avgRandCooperate = randCooperateFitness / QUARTER_AGENTS;
 		
-		return new String[]{"#agents = " + agents.size(), "\nAverage Fitness of Strategies", "Cooperate: " + avgCooperate, "Cheat: " + avgCheat,
-				"Randomly Cooperate: " + avgRandCooperate, "Tit-4-Tat: " + avgTit4Tat};
+		return new String[]{
+				"#agents = " + agents.size(), 
+				"clock = " + getTime(), 
+				"\nAverage Fitness of Strategies", 
+				"Cooperate: " + avgCooperate, 
+				"Cheat: " + avgCheat, 
+				"Randomly Cooperate: " + avgRandCooperate, 
+				"Tit-4-Tat: " + avgTit4Tat
+				};
 	}
 	
 	public void populate() {
-		Strategy s = null;
 		for (int i = 0; i < 4; i++) {
-			if (i == 0)
-				s = new Cooperate();
-			if (i == 1)
-				s = new Cheat();
-			if (i == 2)
-				s = new Tit4Tat();
-			if (i == 3)
-				s = new RandomlyCooperate();
-			
-			for (int j = 0; j < TOTAL_AGENTS / 4; j++) {
-				addAgent(new Prisoner(s));
+			for (int j = 0; j < QUARTER_AGENTS; j++) {
+				Prisoner p = new Prisoner();
+				if (i == 0) {
+					p.strategy = new Cooperate();
+				} else if (i == 1) {
+					p.strategy = new Cheat();
+				} else if (i == 2) {
+					p.strategy = new RandomlyCooperate();
+				} else {
+					p.strategy = new Tit4Tat();
+				}
+				addAgent(p);
 			}
 		}
     }

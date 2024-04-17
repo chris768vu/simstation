@@ -3,9 +3,11 @@ import simstation.*;
 
 public class Cooperate extends Strategy {
 
-	@Override
+	public Cooperate() {
+		super();
+	}
+
 	public boolean cooperate() {
-		myPrisoner.willCheat = false;
 		return true;
 	}
 	

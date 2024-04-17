@@ -1,9 +1,12 @@
 package pdtournament;
 
 public class Cheat extends Strategy{
-	@Override
+	
+	public Cheat() {
+		super();
+	}
+
 	public boolean cooperate() {
-		myPrisoner.willCheat = true;
 		// opposite of cooperate
 		return false;
 	}

@@ -1,4 +1,5 @@
 package pdtournament;
+
 import mvc.Utilities;
 import simstation.*;
 
@@ -8,36 +9,38 @@ public class Prisoner extends Agent {
 	Strategy strategy;
 	
 	private int fitness = 0;
-	protected boolean partnerCheated = false;
-	protected boolean willCheat = false;
+	protected boolean partnerCheated;
+	protected boolean willCheat;
 	
-	public Prisoner(Strategy strategy) {
+	public Prisoner() {
 		super();
 		heading = heading.random();
-		this.strategy = strategy;
 	}
 	
+	// interaction
 	public boolean cooperate() {
+		strategy.cooperate();
 		Agent partner = world.getNeighbor(this, RADIUS);
 		if (partner != null) {
 			Prisoner prisonPartner = (Prisoner) partner;
 			if (!willCheat && !prisonPartner.willCheat) {
 				updateFitness(3);
 				prisonPartner.updateFitness(3);
-				if (strategy instanceof Tit4Tat) {
-					
-				}
-				return false;
+				partnerCheated = false;
+				return true;
 			} else if (willCheat && !prisonPartner.willCheat) {
 				updateFitness(5);
+				partnerCheated = false;
 				return false;
 			} else if (!willCheat && prisonPartner.willCheat) {
 				prisonPartner.updateFitness(5);
+				partnerCheated = true;
 				return true;
 			} else if (willCheat && prisonPartner.willCheat) {
 				updateFitness(1);
 				prisonPartner.updateFitness(1);
-				return true;
+				partnerCheated = true;
+				return false;
 			} 
 		}
 		
@@ -55,7 +58,7 @@ public class Prisoner extends Agent {
 		fitness += amt;
 	}
 	
-	public int getFitness() {
+	public synchronized int getFitness() {
 		return fitness;
 	}
 

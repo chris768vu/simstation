@@ -1,17 +1,18 @@
 package pdtournament;
 
-public class Tit4Tat extends Strategy{
-
-	@Override
+public class Tit4Tat extends Strategy {
+	
+	public Tit4Tat() {
+		super();
+	}
+	
+	/* myPrisoner cheats (i.e. not cooperate) unless
+		its last partner cooperates */
 	public boolean cooperate() {
-		// myPrisoner only cooperates if its last partner cooperated
-		myPrisoner.willCheat = true;
-		
 		if (!myPrisoner.partnerCheated) {
-			myPrisoner.willCheat = false;
-			return myPrisoner.willCheat;
+			return true;
 		} else {
-			return myPrisoner.willCheat;
+			return false;
 		}
 	}
 
