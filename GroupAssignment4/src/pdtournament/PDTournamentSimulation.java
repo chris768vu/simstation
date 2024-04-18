@@ -27,7 +27,7 @@ public class PDTournamentSimulation extends Simulation {
 			else if (current.strategy instanceof RandomlyCooperate)
 				randCooperateFitness += current.getFitness();
 		}
-		
+		// averages are divided by the number of agents who use their respective strategies
 		double avgCooperate = cooperateFitness / QUARTER_AGENTS;
 		double avgCheat = cheatFitness / QUARTER_AGENTS;
 		double avgTit4Tat = tit4tatFitness / QUARTER_AGENTS;
@@ -48,6 +48,7 @@ public class PDTournamentSimulation extends Simulation {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < QUARTER_AGENTS; j++) {
 				Prisoner p = new Prisoner();
+				
 				if (i == 0) {
 					p.strategy = new Cooperate();
 				} else if (i == 1) {
@@ -57,6 +58,8 @@ public class PDTournamentSimulation extends Simulation {
 				} else {
 					p.strategy = new Tit4Tat();
 				}
+				
+				p.strategy.myPrisoner = p;
 				addAgent(p);
 			}
 		}

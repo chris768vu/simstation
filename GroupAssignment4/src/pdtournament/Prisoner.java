@@ -19,10 +19,14 @@ public class Prisoner extends Agent {
 	
 	// interaction
 	public boolean cooperate() {
-		strategy.cooperate();
 		Agent partner = world.getNeighbor(this, RADIUS);
+		
 		if (partner != null) {
 			Prisoner prisonPartner = (Prisoner) partner;
+			
+			strategy.cooperate();
+			prisonPartner.strategy.cooperate();
+			
 			if (!willCheat && !prisonPartner.willCheat) {
 				updateFitness(3);
 				prisonPartner.updateFitness(3);
