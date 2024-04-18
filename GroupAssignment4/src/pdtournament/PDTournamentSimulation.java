@@ -5,7 +5,7 @@ import simstation.*;
 import java.util.Iterator;
 
 public class PDTournamentSimulation extends Simulation {
-	final static int TOTAL_AGENTS = 40;
+	final static int TOTAL_AGENTS = 20;
 	final static int QUARTER_AGENTS = TOTAL_AGENTS / 4;
 	
 	@Override
