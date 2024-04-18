@@ -22,7 +22,7 @@ public class SimulationFactory implements AppFactory {
 	public String[] getHelp() {
 		String[] help = {"Start starts the simulation\n", "Suspend pauses the simulation\n", "Resume undos suspend\n", 
 				"Stop ends the simulation run\n", 
-				"Stats displays the simulation time (in seconds) and the number of agents\n"};
+				"Stats displays the simulation's relevant statistics\n"};
 		return help;
 	}
 
@@ -43,6 +43,7 @@ public class SimulationFactory implements AppFactory {
     	if (name.equals("Stop")) return new StopCommand(m);
     	if (name.equals("Suspend")) return new SuspendCommand(m);
     	if (name.equals("Resume")) return new ResumeCommand(m);	
+    	if (name.equals("Stats")) return new StatsCommand(m);
 		return null;
 	}
 
