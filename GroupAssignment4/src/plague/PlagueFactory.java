@@ -6,11 +6,11 @@ import simstation.*;
 public class PlagueFactory extends SimulationFactory {
     @Override
     public Model makeModel() {
-        return new PlagueSimstation();
+        return new PlagueSimulation();
     }
     @Override
     public View makeView(Model m) {
-        return new PlagueView((PlagueSimstation)m);
+        return new PlagueView((PlagueSimulation)m);
     }
 
     @Override

@@ -31,8 +31,8 @@ public class People extends Agent {
     public void update() {
         People neighbor = (People)world.getNeighbor(this, RADIUS);
         if (neighbor != null && neighbor.isInfected && !this.isInfected){
-            isInfected = infect(PlagueSimstation.VIRULENCE);
-            if (resist(PlagueSimstation.RESISTANCE)){isInfected = false ;}
+            isInfected = infect(PlagueSimulation.VIRULENCE);
+            if (resist(PlagueSimulation.RESISTANCE)){isInfected = false ;}
         }
         heading = Heading.random();
         move(3);
